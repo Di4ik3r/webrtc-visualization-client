@@ -1,0 +1,9 @@
+{{!-- {{debugger }} --}}
+
+<h1>User agents</h1>
+
+<ul>
+    {{#each @model as |stat|}}
+    <li>{{stat.user_agent}}</li>
+    {{/each}}
+</ul>
