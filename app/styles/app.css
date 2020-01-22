@@ -1,0 +1,29 @@
+body {
+  background-image: url(https://incompetech.com/graphpaper/lite/30x40%20Black.png);
+  background-size: cover;
+  background-color: #fffdf9;
+}
+
+.header {
+  background-color: #1e719b;
+  color: #fdece5;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 5px 5px;
+}
+
+.card {
+  background-color: #151515;
+  color: #fdece5;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 5px 5px #fdece5;
+}
+
+.card-title {
+  color: #852315;
+}
+
+.card-header {
+  background-color: #292929;
+}

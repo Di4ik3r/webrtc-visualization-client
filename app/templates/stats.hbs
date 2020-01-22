@@ -1,9 +1,10 @@
 {{!-- {{debugger }} --}}
 
-<h1>User agents</h1>
+<Header @text="Stats list" />
 
 <ul>
     {{#each @model as |stat|}}
-    <li>{{stat.user_agent}}</li>
+    <Statistic @session_id="{{stat.id}}" @event_type={{stat.event_type}} @user_agent={{stat.user_agent}}
+        @note={{stat.note}} @created_at={{stat.created_at}} @updated_at={{stat.updated_at}} @stats={{stat.stats}} />
     {{/each}}
 </ul>

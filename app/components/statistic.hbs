@@ -1,0 +1,41 @@
+<div class="card">
+    <div class="card-header">
+        Event type: <b><i>{{@event_type}}</i></b>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{@session_id}}</h5>
+        <p class="card-text">User agent {{@user_agent}}</p>
+        <a href="#" class="btn btn-outline-dark">View</a>
+    </div>
+</div>
+{{!-- 
+<div style="border: 1px solid red;">
+    <h3>{{@session_id}}</h3>
+    <small> Event type {{@event_type}}</small>
+    <br>
+    <small>Note {{@note}}</small>
+    <br>
+    <small>User agent {{@user_agent}}</small>
+    <br>
+    <div>
+        <div>
+            <ul>
+                <li>
+                    packets lost {{@stats.audio.packets_lost}}
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li>
+                    bytes sent {{@stats.video.bytes_sent}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <small> created at {{@created_at}}</small>
+    <br>
+    <small> updated at {{@updated_at}}</small>
+    <br>
+</div> --}}
+{{yield}}
