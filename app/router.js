@@ -9,4 +9,7 @@ export default class Router extends EmberRouter {
 Router.map(function() {
   this.route("users");
   this.route("stats");
+  this.route("stat-info", function() {
+    this.route("info", { path: "/:statistic_id" });
+  });
 });

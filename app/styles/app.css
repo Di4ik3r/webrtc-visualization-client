@@ -27,3 +27,7 @@ body {
 .card-header {
   background-color: #292929;
 }
+
+.createdAt {
+  float: right;
+}
