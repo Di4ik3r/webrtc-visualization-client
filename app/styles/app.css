@@ -1,7 +1,107 @@
+
+
+.graph {
+  margin: 0 0 2% 1%;
+}
+
+.info-value {
+  padding-left: 4%;
+}
+
+.info-header { 
+  font-weight: bold;
+}
+
+.info-element {
+  border-bottom: 1px solid #afafaf;
+  display: inline-block;
+  width: 100%;
+  /* margin-bottom: 5%; */
+  padding: 3% 4% 0% 4%;
+  transition: all 0.2s ease-out;
+}
+.info-element:hover {
+  background: #efefef;
+}
+
+.info-head {
+  text-align: center;
+  background: #cfcfcf;
+}
+
+.info {
+  /* padding: 1% 0%;
+
+  background: #ffffff;
+  width: 100%;
+  border-radius: 8px;
+
+  border-left: 2px solid #afafaf;
+  border-top: 2px solid #afafaf;
+
+  transition: all 0.2s ease-out; */
+}
+.info:hover {
+  /* background: #cccccc; */
+}
+
+.panel {
+  padding: 1% 0%;
+
+  background: #ffffff;
+  width: 100%;
+  border-radius: 8px;
+
+  border-left: 2px solid #afafaf;
+  border-top: 2px solid #afafaf;
+
+  transition: all 0.2s ease-out;
+}
+
+.output {
+  margin-top: 3%;
+}
+
+.search-button {
+  text-align:center;
+  display: inline-block;
+  border-left: 2px solid #afafaf;
+  width: 13%;
+  /* user-select: none; */
+}
+.search-panel {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+#searchbar {
+  border: 0;
+  width: 80%;
+  text-align: center;
+  transition: all 0.2s ease-out;
+  border-radius: 5px;
+}
+#searchbar:focus {
+  /* border-right: 2px solid #8f8f8f; */
+  /* border-bottom: 2px solid #8f8f8f; */
+  width: 85%;
+}
+
+.dashboard {
+  padding: 2% 3% 2% 3%;
+  background: #efefef;
+  border-radius: 8px;
+}
+
+.navbar {
+  margin-bottom: 3%;
+}
+
+
 body {
-  background-image: url(https://incompetech.com/graphpaper/lite/30x40%20Black.png);
   background-size: cover;
-  background-color: #fffdf9;
+  background-color: #afafaf;
 }
 
 .header {
