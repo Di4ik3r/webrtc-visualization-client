@@ -1,11 +1,13 @@
 <div class="card">
     <div class="card-header">
-        Event type: <b><i>{{@event_type}}</i></b>
-        <small class="createdAt"> Created at {{@created_at}}</small>
+        Event type: <b><i>{{@stat.event_type}}</i></b>
+        <small class="createdAt"> Created at {{@stat.created_at}}</small>
     </div>
     <div class="card-body">
-        <h5 class="card-title">{{@session_id}}</h5>
-        <p class="card-text">User agent {{@user_agent}}</p>
-        <a href="#" class="btn btn-outline-dark">View</a>
+        <h5 class="card-title">{{@stat.session_id}}</h5>
+        <p class="card-text">User agent {{@stat.user_agent}}</p>
+        <LinkTo @route="stat-info.info" @model={{@stat}}>
+            <button class="btn btn-outline-dark">View</button>
+        </LinkTo>
     </div>
 </div>
