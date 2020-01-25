@@ -1,4 +1,7 @@
 
+
+
+
 <div class="dashboard row">
     <Dashboard::Searchbar/>
 
@@ -6,52 +9,66 @@
         <div class="col-4">
             <div class="info panel">
                 <h3 class="info-head">
-                <b>Fields</b>
-            </h3>
-            <span class="info-element">
-                <span class="info-header">
-                    ID:
-                </span>
-                 <span class="info-value">
-                     27831293
-                 </span>
-            </span>
+                    <b>Fields</b>
+                </h3>
 
-            <span class="info-element">
-                <span class="info-header">
-                    Event type: 
-                </span>
-                <span class="info-value">
-                    8
-                </span>
-            </span>
+                {{#each @model as |record|}}
+                    <span class="info-element">
+                        <span class="info-header">
+                            {{get record "0"}}:
+                        </span>
+                        <span class="info-value">
+                            {{get record "1"}}
+                        </span>
+                    </span>
+                {{/each}}
 
-            <span class="info-element">
-                <span class="info-header">
-                    Created:
-                </span>
-                <span class="info-value">
-                    2019-01-31T14:51:13.980Z
-                </span>
-            </span>
 
-            <span class="info-element">
-                <span class="info-header">
-                    Updated:
+                
+                {{!-- <span class="info-element">
+                    <span class="info-header">
+                        ID:
+                    </span>
+                    <span class="info-value">
+                        27831293
+                    </span>
                 </span>
-                <span class="info-value">
-                    2019-01-31T14:51:13.980Z
-                </span>
-            </span>
 
-            <span class="info-element">
-                <span class="info-header">
-                    User agent:
+                <span class="info-element">
+                    <span class="info-header">
+                        Event type: 
+                    </span>
+                    <span class="info-value">
+                        8
+                    </span>
                 </span>
-                <span class="info-value">
-                    Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+
+                <span class="info-element">
+                    <span class="info-header">
+                        Created:
+                    </span>
+                    <span class="info-value">
+                        2019-01-31T14:51:13.980Z
+                    </span>
                 </span>
-            </span>
+
+                <span class="info-element">
+                    <span class="info-header">
+                        Updated:
+                    </span>
+                    <span class="info-value">
+                        2019-01-31T14:51:13.980Z
+                    </span>
+                </span>
+
+                <span class="info-element">
+                    <span class="info-header">
+                        User agent:
+                    </span>
+                    <span class="info-value">
+                        Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+                    </span>
+                </span> --}}
             </div>
         </div>
         
