@@ -1,40 +1,44 @@
-import Route from '@ember/routing/route';
-
-
+import Route from "@ember/routing/route";
 
 export default class IndexRoute extends Route {
-	async model(id) {
-		if(+id) {
-			let record = await this.store.findRecord("statistic", id)
-			.then(data => {
-				console.log(data)
-			})
-		}
+  model() {
+    return this.store.findAll("statistic").then(res => {
+      return [res.get("firstObject")];
+    });
+  }
 
-		let firstRecord = await this.store.findAll("statistic")
-		.then(items => {
-			let object = items.get("firstObject")
-			return this.generateArray(object)
-		})
-		.catch(err => console.log(err))
+  // async model(id) {
+  // 	if(+id) {
+  // 		let record = await this.store.findRecord("statistic", id)
+  // 		.then(data => {
+  // 			console.log(data)
+  // 		})
+  // 	}
 
-		return firstRecord
-	}
+  // 	let firstRecord = await this.store.findAll("statistic")
+  // 	.then(items => {
+  // 		let object = items.get("firstObject")
+  // 		return this.generateArray(object)
+  // 	})
+  // 	.catch(err => console.log(err))
 
-	generateArray(obj) {
-		let result = new Map()
-		
-		for(let key of Object.getOwnPropertyNames(Object.getPrototypeOf(obj))) {
-			if(key == "constructor")
-				continue
+  // 	return firstRecord
+  // }
 
-			result.set(key, obj[key])
-		}
+  // generateArray(obj) {
+  // 	let result = new Map()
 
-		return result.entries()
-	}
+  // 	for(let key of Object.getOwnPropertyNames(Object.getPrototypeOf(obj))) {
+  // 		if(key == "constructor")
+  // 			continue
 
-	lmao(input) {
-		console.log(input)
-	}
+  // 		result.set(key, obj[key])
+  // 	}
+
+  // 	return result.entries()
+  // }
+
+  // lmao(input) {
+  // 	console.log(input)
+  // }
 }

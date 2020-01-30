@@ -1,9 +1,5 @@
-
-
-
-
 <div class="dashboard row">
-    <Dashboard::Searchbar/>
+    <Dashboard::Searchbar />
 
     <div class="row output">
         <div class="col-4">
@@ -13,18 +9,18 @@
                 </h3>
 
                 {{#each @model as |record|}}
-                    <span class="info-element">
-                        <span class="info-header">
-                            {{get record "0"}}:
-                        </span>
-                        <span class="info-value">
-                            {{get record "1"}}
-                        </span>
+                <span class="info-element">
+                    <span class="info-header">
+                        {{get record "0"}}:
                     </span>
+                    <span class="info-value">
+                        {{get record "1"}}
+                    </span>
+                </span>
                 {{/each}}
 
 
-                
+
                 {{!-- <span class="info-element">
                     <span class="info-header">
                         ID:
@@ -71,14 +67,16 @@
                 </span> --}}
             </div>
         </div>
-        
+
         <div class="col-8 stats">
             <div class="row panel graph bit-rate">
-                <img src="https://cdn.pixabay.com/photo/2016/01/20/10/48/graph-1151294_960_720.png" height="130px" alt="" srcset="">
+                <img src="https://cdn.pixabay.com/photo/2016/01/20/10/48/graph-1151294_960_720.png" height="130px"
+                    alt="" srcset="">
             </div>
 
             <div class="row panel graph packages-loss">
-                <img src="https://cdn.pixabay.com/photo/2016/01/20/10/48/graph-1151294_960_720.png" height="130px" alt="" srcset="">
+                <img src="https://cdn.pixabay.com/photo/2016/01/20/10/48/graph-1151294_960_720.png" height="130px"
+                    alt="" srcset="">
             </div>
         </div>
     </div>

@@ -5,9 +5,6 @@
 <ul>
     {{#each @model as |stat|}}
     <Statistic @stat={{stat}} />
-    {{!-- <LinkTo @route="stat-info.info" @model={{stat}}>View</LinkTo> --}}
-    {{!-- <Statistic @session_id="{{stat.id}}" @event_type={{stat.event_type}} @user_agent={{stat.user_agent}}
-        @note={{stat.note}} @created_at={{stat.created_at}} @updated_at={{stat.updated_at}} @stats={{stat.stats}} /> --}}
     {{/each}}
 </ul>
 
