@@ -1,9 +1,11 @@
 {{!-- {{debugger }} --}}
 
-<Header @text="Stats list" />
+<Header @text="Stats list" @onClick={{this.searchStat}} />
+<Input placeholder="Session id..." @value={{this.session_id}} />
+<button type="button" {{on "click" (fn this.searchStat this.session_id)}}>Click me!</button>
 
 <ul>
-    {{#each @model as |stat|}}
+    {{#each this.model as |stat|}}
     <Statistic @stat={{stat}} />
     {{!-- <LinkTo @route="stat-info.info" @model={{stat}}>View</LinkTo> --}}
     {{!-- <Statistic @session_id="{{stat.id}}" @event_type={{stat.event_type}} @user_agent={{stat.user_agent}}
