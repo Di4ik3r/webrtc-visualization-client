@@ -1,8 +1,6 @@
-
-
 <div class="text-center col-6 offset-3">
     <div class="panel search-panel">
-        <input value={{this.input}} onchange={{action (mut this.input) value="target.value"}} type="text" name="searchbar" id="searchbar" placeholder="id input">
-        <span {{on "click" (fn search this.input)}} class="search-button">Search</span>
+        <Input @value={{this.lesson_id}} type="text" name="searchbar" id="searchbar" placeholder="Lesson id" />
+        <span {{on "click" (fn @searchStat lesson_id)}} class="search-button">Search</span>
     </div>
 </div>

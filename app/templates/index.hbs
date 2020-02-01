@@ -1,14 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <Dashboard @model={{this.model}} />
-
-            <Header @text="Stats list" />
-
-            <Input @value={{this.lesson_id}} {{on "enter" (fn this.searchStat)}} />
-            <button type="button" {{on "click" (fn this.searchStat)}}>
-                Search
-            </button>
+            <Dashboard @model={{this.model}} @onClick={{this.searchStat}} />
 
             <ul>
                 {{#each this.model as |stat|}}
