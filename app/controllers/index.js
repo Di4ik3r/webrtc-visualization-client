@@ -1,96 +1,107 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import d3 from 'd3'
+import d3 from "d3";
 
 export default class IndexController extends Controller {
   hello = "hello word";
 
   constructor(args) {
     super(args);
-    //console.log(this);
   }
 
   @action
-  searchStat() {
+  searchStat(lesson_id) {
     this.store
       .query("statistic", {
         filter: {
-          lesson_id: this.lesson_id
+          lesson_id: lesson_id
         }
       })
       .then(result => {
         this.model = result;
-        this.drawBitsChart()
-        this.drawPackageLossChart()
+        this.drawBitsChart();
+        this.drawPackageLossChart();
       });
   }
 
   drawPackageLossChart() {
     // приведення даних
-    let dataset = []
+    let dataset = [];
     this.model.forEach(item => {
-      let loss = +item.stats.video.packets_lost || null
-      let sent = +item.stats.video.packets_sent
-      
-      if(!loss) {
-        dataset.push(1)
-        return
+      let loss = +item.stats.video.packets_lost || null;
+      let sent = +item.stats.video.packets_sent;
+
+      if (!loss) {
+        dataset.push(1);
+        return;
       }
 
-      let result = loss / sent
-      dataset.push(result)
-    })
-    // dataset.sort((prev, current) => prev.time < current.time)
+      let result = loss / sent;
+      dataset.push(result);
+    });
+    //dataset.sort((prev, current) => prev.time < current.time);
 
     // відступи для "margin convention"
-    let margin = {top: 50, right: 50, bottom: 50, left: 50}, 
-    width = 800 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    let margin = { top: 50, right: 50, bottom: 50, left: 50 },
+      width = 800 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
 
     // скейл для timestamp
-    let xScale = d3.scaleLinear()
-        .domain([0, dataset.length - 1])
-        .range([0, width]);
+    let xScale = d3
+      .scaleLinear()
+      .domain([0, dataset.length - 1])
+      .range([0, width]);
 
     // скейл для bit
-    let yScale = d3.scaleLinear()
-        // .domain(d3.extent(dataset))
-        .domain([0, 1])
-        .range([height, 0]);
+    let yScale = d3
+      .scaleLinear()
+      // .domain(d3.extent(dataset))
+      .domain([0, 1])
+      .range([height, 0]);
 
     // d3 лайн генератор
-    let line = d3.line()
-        .x(function(d, i) { return xScale(i); })
-        .y(function(d, i) { return yScale(d); })
-        .curve(d3.curveMonotoneX)
+    let line = d3
+      .line()
+      .x(function(d, i) {
+        return xScale(i);
+      })
+      .y(function(d, i) {
+        return yScale(d);
+      })
+      .curve(d3.curveMonotoneX);
 
     // коректне створення svg елемента
-    if(!d3.select("#packageloss").empty()) {
-      d3.select("#packageloss").remove()
+    if (!d3.select("#packageloss").empty()) {
+      d3.select("#packageloss").remove();
     }
-    let svg = d3.select("#packageloss-area").append("svg")
-        .attr("id", "packageloss")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+    let svg = d3
+      .select("#packageloss-area")
+      .append("svg")
+      .attr("id", "packageloss")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
       .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // створення осі ОХ
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale));
+    svg
+      .append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(xScale));
 
     // створення осі ОY
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(d3.axisLeft(yScale));
+    svg
+      .append("g")
+      .attr("class", "y axis")
+      .call(d3.axisLeft(yScale));
 
     // створення лінії
-    svg.append("path")
-        .datum(dataset) // біндимо дані до лінії
-        .attr("class", "line") // css клас для кастомного стиля
-        .attr("d", line); // виклик генератора лінії, який ми оголосили до цього
+    svg
+      .append("path")
+      .datum(dataset) // біндимо дані до лінії
+      .attr("class", "line") // css клас для кастомного стиля
+      .attr("d", line); // виклик генератора лінії, який ми оголосили до цього
 
     // створення датапоінтів
     svg.selectAll(".dot")
@@ -119,9 +130,9 @@ export default class IndexController extends Controller {
     dataset.sort((prev, current) => prev.time - current.time)
 
     // відступи для "margin convention"
-    let margin = {top: 50, right: 50, bottom: 50, left: 100}, 
-    width = 800 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    let margin = { top: 50, right: 50, bottom: 50, left: 100 },
+      width = 800 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
 
     // скейл для timestamp
     let xScale = d3.scaleTime()
@@ -129,43 +140,54 @@ export default class IndexController extends Controller {
         .range([0, width]);
 
     // скейл для bit
-    let yScale = d3.scaleLinear()
-        .domain(d3.extent(dataset, item => item.bit))
-        .range([height, 0]);
+    let yScale = d3
+      .scaleLinear()
+      .domain(d3.extent(dataset, item => item.bit))
+      .range([height, 0]);
 
     // d3 лайн генератор
-    let line = d3.line()
-        .x(function(d, i) { return xScale(d.time); })
-        .y(function(d, i) { return yScale(d.bit); })
-        .curve(d3.curveMonotoneX)
+    let line = d3
+      .line()
+      .x(function(d, i) {
+        return xScale(d.time);
+      })
+      .y(function(d, i) {
+        return yScale(d.bit);
+      })
+      .curve(d3.curveMonotoneX);
 
     // коректне створення svg елемента
-    if(!d3.select("#bits").empty()) {
-      d3.select("#bits").remove()
+    if (!d3.select("#bits").empty()) {
+      d3.select("#bits").remove();
     }
-    let svg = d3.select("#bits-area").append("svg")
-        .attr("id", "bits")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+    let svg = d3
+      .select("#bits-area")
+      .append("svg")
+      .attr("id", "bits")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
       .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // створення осі ОХ
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale));
+    svg
+      .append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(xScale));
 
     // створення осі ОY
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(d3.axisLeft(yScale));
+    svg
+      .append("g")
+      .attr("class", "y axis")
+      .call(d3.axisLeft(yScale));
 
     // створення лінії
-    svg.append("path")
-        .datum(dataset) // біндимо дані до лінії
-        .attr("class", "line") // css клас для кастомного стиля
-        .attr("d", line); // виклик генератора лінії, який ми оголосили до цього
+    svg
+      .append("path")
+      .datum(dataset) // біндимо дані до лінії
+      .attr("class", "line") // css клас для кастомного стиля
+      .attr("d", line); // виклик генератора лінії, який ми оголосили до цього
 
     // створення датапоінтів
     svg.selectAll(".dot")

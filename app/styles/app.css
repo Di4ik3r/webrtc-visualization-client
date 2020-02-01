@@ -1,9 +1,7 @@
-
-
 .line {
   fill: none;
   /* stroke: #ffab00; */
-  stroke: #FFC312;
+  stroke: #ffc312;
   stroke-width: 3;
 }
 .overlay {
@@ -12,17 +10,13 @@
 }
 /* Style the dots by assigning a fill and stroke */
 .dot {
-  fill: #FFC312;
+  fill: #ffc312;
   stroke: #fff;
 }
 .focus circle {
   fill: none;
   stroke: steelblue;
 }
-
-
-
-
 
 .graph {
   margin: 0 0 2% 1%;
@@ -32,7 +26,7 @@
   padding-left: 4%;
 }
 
-.info-header { 
+.info-header {
   font-weight: bold;
 }
 
@@ -87,7 +81,7 @@
 }
 
 .search-button {
-  text-align:center;
+  text-align: center;
   display: inline-block;
   border-left: 2px solid #afafaf;
   width: 13%;
@@ -120,9 +114,8 @@
 
 .navbar {
   margin-bottom: 3%;
-  background: #E04E39;
+  background: #e04e39;
 }
-
 
 body {
   background-size: cover;
@@ -138,7 +131,7 @@ body {
 }
 
 .card {
-  background-color: #151515;
+  background-color: #e04e39;
   color: #fdece5;
   margin: 10px;
   border-radius: 10px;
