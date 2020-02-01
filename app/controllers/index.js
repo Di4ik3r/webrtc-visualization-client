@@ -100,21 +100,23 @@ export default class IndexController extends Controller {
         .attr("cx", function(d, i) { return xScale(i) })
         .attr("cy", function(d) { return yScale(d) })
         .attr("r", 5)
-          .on("mouseover", function(a, b, c) { 
-            console.log(a) 
-            d3.selectAll(".dot").classed("focus", true)
-           })
-          .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
+          // .on("mouseover", function(a, b, c) { 
+          //   console.log(a) 
+          //   d3.selectAll(".dot").classed("focus", true)
+          //  })
+          // .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
   }
 
   drawBitsChart() {
     // приведення даних
     let dataset = []
-    this.model.forEach(item => dataset.push({
-      bit: item.stats.video.bytes_sent,
-      time: item.stats.timestamp
-    }))
-    dataset.sort((prev, current) => prev.time < current.time)
+    this.model.forEach(item => 
+      dataset.push({
+        bit: item.stats.video.bytes_sent,
+        time: item.stats.timestamp
+      })
+    )
+    dataset.sort((prev, current) => prev.time - current.time)
 
     // відступи для "margin convention"
     let margin = {top: 50, right: 50, bottom: 50, left: 100}, 
@@ -122,7 +124,7 @@ export default class IndexController extends Controller {
     height = 400 - margin.top - margin.bottom;
 
     // скейл для timestamp
-    let xScale = d3.scaleLinear()
+    let xScale = d3.scaleTime()
         .domain(d3.extent(dataset, item => item.time))
         .range([0, width]);
 
@@ -173,10 +175,10 @@ export default class IndexController extends Controller {
         .attr("cx", function(d, i) { return xScale(d.time) })
         .attr("cy", function(d) { return yScale(d.bit) })
         .attr("r", 5)
-          .on("mouseover", function(a, b, c) { 
-            console.log(a) 
-            d3.selectAll(".dot").classed("focus", true)
-           })
-          .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
+          // .on("mouseover", function(a, b, c) { 
+          //   console.log(a) 
+          //   d3.selectAll(".dot").classed("focus", true)
+          //  })
+          // .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
   }
 }
