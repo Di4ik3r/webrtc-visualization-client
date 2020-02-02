@@ -14,4 +14,9 @@ export default class DashboardSearchbarComponent extends Component {
         //     this.sendAction()
         // }
     }
+
+    @action
+    key() {
+        console.log(this.lesson_id)
+    }
 }

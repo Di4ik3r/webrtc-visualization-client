@@ -1,6 +1,11 @@
 <div class="text-center col-6 offset-3">
     <div class="panel search-panel">
-        <Input @value={{this.lesson_id}} type="text" name="searchbar" id="searchbar" placeholder="Lesson id" />
+        <Input 
+            {{on "click" key}}
+            @enter={{this.key}}
+            @searchFunction={{@searchStat}}
+            @value={{this.lesson_id}}
+            type="text" name="searchbar" id="searchbar" placeholder="Lesson id" />
         <span {{on "click" (fn @searchStat lesson_id)}} class="search-button">Search</span>
     </div>
 </div>
