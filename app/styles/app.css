@@ -19,7 +19,8 @@
 }
 
 .graph {
-  margin: 0 0 2% 1%;
+  /* margin: 0 0 2% 1%; */
+  /* width: 100%; */
 }
 
 .info-value {

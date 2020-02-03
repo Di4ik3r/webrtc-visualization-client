@@ -42,9 +42,9 @@ export default class IndexController extends Controller {
     //dataset.sort((prev, current) => prev.time < current.time);
 
     // відступи для "margin convention"
-    let margin = { top: 50, right: 50, bottom: 50, left: 50 },
-      width = 800 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+    let margin = { top: 10, right: 5, bottom: 30, left: 30 },
+      width = 500 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
 
     // скейл для timestamp
     let xScale = d3
@@ -130,9 +130,9 @@ export default class IndexController extends Controller {
     dataset.sort((prev, current) => prev.time - current.time)
 
     // відступи для "margin convention"
-    let margin = { top: 50, right: 50, bottom: 50, left: 100 },
-      width = 800 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+    let margin = { top: 10, right: 5, bottom: 30, left: 90 },
+      width = 500 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
 
     // скейл для timestamp
     let xScale = d3.scaleTime()
