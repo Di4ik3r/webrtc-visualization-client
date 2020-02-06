@@ -1,18 +1,18 @@
 <div class="dashboard">
-    <Dashboard::Searchbar @searchStat={{@onClick}} />
+    <Dashboard::Searchbar @searchStat={{@onClick}} @model={{@model}} />
 
     <div class="row output text-center">
 
         {{!-- <div class=""> --}}
-            <div class="col-6 ">
-                <div class="bit-rate panel graph" id="bits-area">
-                </div>
+        <div class="col-6 ">
+            <div class="bit-rate panel graph" id="bits-area">
             </div>
+        </div>
 
-            <div class="col-6">
-                <div class="packages-loss panel graph" id="packageloss-area">
-                </div>
+        <div class="col-6">
+            <div class="packages-loss panel graph" id="packageloss-area">
             </div>
+        </div>
         {{!-- </div> --}}
     </div>
 </div>

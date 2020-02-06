@@ -1,13 +1,39 @@
 <div class="card">
     <div class="card-header">
-        Lesson id: <b><i>{{@stat.lesson_id}}</i></b>
-        <small class="createdAt"> Created at {{@stat.created_at}}</small>
+        <b><i>{{@stat.ua}}</i></b>
     </div>
     <div class="card-body">
-        <h5 class="card-title">{{@stat.session_id}}</h5>
+        <div class="row">
+            <div class="col ua-info">
+                <p class="card-text"><b class="ua-text">Browser name:</b> {{@stat.browser.name}}</p>
+                <p class="card-text"><b class="ua-text">Browser version:</b> {{@stat.browser.version}}</p>
+            </div>
+            <div class="col ua-info">
+                <p class="card-text"><b class="ua-text">OS name:</b> {{@stat.os.name}}</p>
+                <p class="card-text"><b class="ua-text">OS version:</b> {{@stat.os.version}}</p>
+            </div>
+            <div class="col ua-info">
+                <p class="card-text"><b class="ua-text">Engine name:</b> {{@stat.engine.name}}</p>
+                <p class="card-text"><b class="ua-text">Engine version:</b> {{@stat.engine.version}}</p>
+            </div>
+            <div class="col ua-info">
+                {{#if @stat.cpu.architecture}}
+                <p class="card-text"><b class="ua-text">CPU:</b> {{@stat.cpu.architecture}}</p>
+                {{else}}
+                <p class="card-text"><b class="ua-text">CPU:</b> Unknown</p>
+                {{/if}}
+
+                {{#if @stat.device.vendor}}
+                <p class="card-text"><b class="ua-text">Device:</b> {{@stat.device.vendor}} {{@stat.device.model}}</p>
+                {{else}}
+                <p class="card-text"><b class="ua-text">Device:</b> Unknown</p>
+                {{/if}}
+            </div>
+        </div>
+        {{!-- <h5 class="card-title">{{@stat.session_id}}</h5>
         <p class="card-text">User agent {{@stat.user_agent}}</p>
         <LinkTo @route="stat-info.info" @model={{@stat}}>
             <button class="btn btn-outline-dark">View</button>
-        </LinkTo>
+        </LinkTo> --}}
     </div>
 </div>

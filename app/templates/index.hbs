@@ -1,13 +1,30 @@
 <div class="container-fluid">
-    {{!-- <div class="row"> --}}
-        <div>
-            <Dashboard @model={{this.model}} @onClick={{this.searchStat}} />
-
-            <ul>
-                {{#each this.model as |stat|}}
-                <Statistic @stat={{stat}} />
-                {{/each}}
-            </ul>
+    <div>
+        <Dashboard @model={{this.model}} @onClick={{this.searchStat}} />
+        {{#if this.isLoading}}
+        <div class="text-center">
+            <div class="spinner-grow spinner-grow-lg text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
-    {{!-- </div> --}}
+        {{/if}}
+        <div class="row">
+            <div class="col">
+                <Header @text="User agents" />
+                <ul>
+                    {{#each this.model.userAgents as |stat|}}
+                    <Statistic @stat={{stat}} />
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="col">
+                <Header @text="Errors" />
+                <ul>
+                    {{#each this.model.errors as |stat|}}
+                    <Error @error={{stat}} />
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

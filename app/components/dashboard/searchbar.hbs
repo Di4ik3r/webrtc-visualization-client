@@ -1,11 +1,12 @@
 <div class="text-center col-6 offset-3">
+    {{#if @model.lessonDuration}}
+    <h6>Lesson duration: <i>{{@model.lessonDuration}}</i></h6>
+    {{else}}
+    {{/if}}
+    <p>423591</p>
     <div class="panel search-panel">
-        <Input 
-            {{on "click" key}}
-            @enter={{this.key}}
-            @searchFunction={{@searchStat}}
-            @value={{this.lesson_id}}
+        <Input {{on "click" key}} @enter={{this.key}} @searchFunction={{@searchStat}} @value={{this.lesson_id}}
             type="text" name="searchbar" id="searchbar" placeholder="Lesson id" />
-        <span {{on "click" (fn @searchStat lesson_id)}} class="search-button">Search</span>
+        <button {{on "click" (fn @searchStat lesson_id)}} class="search-button">Search</button>
     </div>
 </div>

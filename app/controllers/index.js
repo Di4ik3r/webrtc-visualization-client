@@ -1,16 +1,20 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
+import { tracked } from "@glimmer/tracking";
 import d3 from "d3";
+import UAParser from "ua-parser-js";
 
 export default class IndexController extends Controller {
-  hello = "hello word";
-
   constructor(args) {
     super(args);
   }
 
+  @tracked isLoading = false;
+
   @action
   searchStat(lesson_id) {
+    this.isLoading = true;
+
     this.store
       .query("statistic", {
         filter: {
@@ -18,16 +22,102 @@ export default class IndexController extends Controller {
         }
       })
       .then(result => {
-        this.model = result;
-        this.drawBitsChart();
-        this.drawPackageLossChart();
+        this.isLoading = false;
+        let userAgents = this.getUserAgents(result);
+        let lessonDuration = this.getLessonDuration(result);
+        let errors = this.getLessonErrors(result);
+
+        this.model = {
+          result,
+          userAgents,
+          lessonDuration,
+          errors
+        };
+
+        // this.drawBitsChart();
+        // this.drawPackageLossChart();
+      })
+      .catch(e => console.log(e));
+  }
+
+  getLessonErrors(statData) {
+    let errors = statData
+      .filter(element => {
+        return element.event_type === -1;
+      })
+      .map(element => {
+        let temp = element.note.split(":");
+        return {
+          header: temp[0],
+          body: temp[1]
+        };
       });
+
+    return errors;
+  }
+
+  getLessonDuration(statData) {
+    let datesArray = statData
+      .filter(element => {
+        return element.event_type === 4;
+      })
+      .reduce((prev, current) => {
+        if (current.stats !== null) {
+          return [...prev, current.stats.timestamp];
+        } else {
+          return [...prev, null];
+        }
+      }, [])
+      .filter(element => {
+        return element !== null;
+      })
+      .sort((prev, curr) => prev - curr);
+
+    let timeString = "No info";
+
+    if (datesArray.length !== 0) {
+      let startTimestamp = datesArray[0];
+      let endTimestamp = datesArray[datesArray.length - 1];
+
+      let startDate = new Date(startTimestamp);
+      let endDate = new Date(endTimestamp);
+
+      let secondsDuration = this.diffSeconds(startDate, endDate);
+
+      let date = new Date(null);
+      date.setSeconds(secondsDuration);
+      timeString = date.toISOString().substr(11, 8);
+    }
+
+    return timeString;
+  }
+
+  diffSeconds(dt2, dt1) {
+    var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+    return Math.abs(Math.round(diff));
+  }
+
+  getUserAgents(statData) {
+    let parser = new UAParser();
+    let set = new Set();
+    let userAgents = [];
+
+    statData.forEach(element => {
+      let res = parser.setUA(element.user_agent).getResult();
+      set.add(JSON.stringify(res));
+    });
+
+    set.forEach(element => {
+      userAgents.push(JSON.parse(element));
+    });
+
+    return userAgents;
   }
 
   drawPackageLossChart() {
     // приведення даних
     let dataset = [];
-    this.model.forEach(item => {
+    this.model.result.forEach(item => {
       let loss = +item.stats.video.packets_lost || null;
       let sent = +item.stats.video.packets_sent;
 
@@ -104,30 +194,36 @@ export default class IndexController extends Controller {
       .attr("d", line); // виклик генератора лінії, який ми оголосили до цього
 
     // створення датапоінтів
-    svg.selectAll(".dot")
-        .data(dataset)
-      .enter().append("circle")
-        .attr("class", "dot")
-        .attr("cx", function(d, i) { return xScale(i) })
-        .attr("cy", function(d) { return yScale(d) })
-        .attr("r", 5)
-          // .on("mouseover", function(a, b, c) { 
-          //   console.log(a) 
-          //   d3.selectAll(".dot").classed("focus", true)
-          //  })
-          // .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
+    svg
+      .selectAll(".dot")
+      .data(dataset)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .attr("cx", function(d, i) {
+        return xScale(i);
+      })
+      .attr("cy", function(d) {
+        return yScale(d);
+      })
+      .attr("r", 5);
+    // .on("mouseover", function(a, b, c) {
+    //   console.log(a)
+    //   d3.selectAll(".dot").classed("focus", true)
+    //  })
+    // .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
   }
 
   drawBitsChart() {
     // приведення даних
-    let dataset = []
-    this.model.forEach(item => 
+    let dataset = [];
+    this.model.result.forEach(item =>
       dataset.push({
         bit: item.stats.video.bytes_sent,
         time: item.stats.timestamp
       })
-    )
-    dataset.sort((prev, current) => prev.time - current.time)
+    );
+    dataset.sort((prev, current) => prev.time - current.time);
 
     // відступи для "margin convention"
     let margin = { top: 10, right: 5, bottom: 30, left: 90 },
@@ -135,9 +231,10 @@ export default class IndexController extends Controller {
       height = 300 - margin.top - margin.bottom;
 
     // скейл для timestamp
-    let xScale = d3.scaleTime()
-        .domain(d3.extent(dataset, item => item.time))
-        .range([0, width]);
+    let xScale = d3
+      .scaleTime()
+      .domain(d3.extent(dataset, item => item.time))
+      .range([0, width]);
 
     // скейл для bit
     let yScale = d3
@@ -190,17 +287,23 @@ export default class IndexController extends Controller {
       .attr("d", line); // виклик генератора лінії, який ми оголосили до цього
 
     // створення датапоінтів
-    svg.selectAll(".dot")
-        .data(dataset)
-      .enter().append("circle")
-        .attr("class", "dot")
-        .attr("cx", function(d, i) { return xScale(d.time) })
-        .attr("cy", function(d) { return yScale(d.bit) })
-        .attr("r", 5)
-          // .on("mouseover", function(a, b, c) { 
-          //   console.log(a) 
-          //   d3.selectAll(".dot").classed("focus", true)
-          //  })
-          // .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
+    svg
+      .selectAll(".dot")
+      .data(dataset)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .attr("cx", function(d, i) {
+        return xScale(d.time);
+      })
+      .attr("cy", function(d) {
+        return yScale(d.bit);
+      })
+      .attr("r", 5);
+    // .on("mouseover", function(a, b, c) {
+    //   console.log(a)
+    //   d3.selectAll(".dot").classed("focus", true)
+    //  })
+    // .on("mouseout", function() { d3.selectAll(".dot").classed(".focus", false) })
   }
 }

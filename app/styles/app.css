@@ -151,10 +151,13 @@ body {
   float: right;
 }
 
+.ua-text {
+  color: #852315;
+}
 
-
-
-
+.ua-info {
+  border: #292929 1px dotted;
+}
 
 .container-fluid {
   width: 95%;
