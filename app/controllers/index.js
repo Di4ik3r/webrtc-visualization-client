@@ -22,6 +22,10 @@ export default class IndexController extends Controller {
         }
       })
       .then(result => {
+        let count = 0
+        result.forEach(item => count++)
+        console.log(count)
+
         this.isLoading = false;
         let userAgents = this.getUserAgents(result);
         let lessonDuration = this.getLessonDuration(result);
@@ -34,8 +38,14 @@ export default class IndexController extends Controller {
           errors
         };
 
-        // this.drawBitsChart();
-        // this.drawPackageLossChart();
+        let statsCheck = result && result.objectAt(0) && result.objectAt(0).stats
+        if(statsCheck) {
+          this.drawBitsChart()
+          this.drawPackageLossChart()
+        } else {
+
+        }
+        
       })
       .catch(e => console.log(e));
   }

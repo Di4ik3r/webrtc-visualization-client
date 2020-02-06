@@ -86,7 +86,12 @@
   display: inline-block;
   border-left: 2px solid #afafaf;
   width: 13%;
-  /* user-select: none; */
+
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 .search-panel {
   padding: 0;
@@ -96,7 +101,7 @@
 
 #searchbar {
   border: 0;
-  width: 80%;
+  width: 84%;
   text-align: center;
   transition: all 0.2s ease-out;
   border-radius: 5px;
@@ -104,7 +109,7 @@
 #searchbar:focus {
   /* border-right: 2px solid #8f8f8f; */
   /* border-bottom: 2px solid #8f8f8f; */
-  width: 85%;
+  width: 86%;
 }
 
 .dashboard {

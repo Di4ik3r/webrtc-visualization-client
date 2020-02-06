@@ -3,10 +3,10 @@
     <h6>Lesson duration: <i>{{@model.lessonDuration}}</i></h6>
     {{else}}
     {{/if}}
-    <p>423591</p>
+    {{!-- <p>423591</p> --}}
     <div class="panel search-panel">
         <Input {{on "click" key}} @enter={{this.key}} @searchFunction={{@searchStat}} @value={{this.lesson_id}}
             type="text" name="searchbar" id="searchbar" placeholder="Lesson id" />
-        <button {{on "click" (fn @searchStat lesson_id)}} class="search-button">Search</button>
+        <span {{on "click" (fn @searchStat lesson_id)}} class="search-button">Search</span>
     </div>
 </div>
