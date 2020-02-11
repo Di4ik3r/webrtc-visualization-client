@@ -15,29 +15,54 @@ export default class IndexController extends Controller {
   searchStat(lesson_id) {
     this.isLoading = true;
 
-    this.store
-      .query("statistic", {
-        filter: {
-          lesson_id: lesson_id
-        }
-      })
-      .then(result => {
-        this.isLoading = false;
-        let userAgents = this.getUserAgents(result);
-        let lessonDuration = this.getLessonDuration(result);
-        let errors = this.getLessonErrors(result);
+    if (this.validate(lesson_id)) {
+      this.store
+        .query("statistic", {
+          filter: {
+            lesson_id: lesson_id
+          }
+        })
+        .then(result => {
+          if (result.content.length !== 0) {
+            this.isLoading = false;
+            let userAgents = this.getUserAgents(result);
+            let lessonDuration = this.getLessonDuration(result);
+            let errors = this.getLessonErrors(result);
 
-        this.model = {
-          result,
-          userAgents,
-          lessonDuration,
-          errors
-        };
+            this.model = {
+              result,
+              userAgents,
+              lessonDuration,
+              errors
+            };
 
-        // this.drawBitsChart();
-        // this.drawPackageLossChart();
-      })
-      .catch(e => console.log(e));
+            this.drawBitsChart();
+            this.drawPackageLossChart();
+          } else {
+            this.showValidationError("Lesson wasnt found");
+          }
+        })
+        .catch(e => console.log(e));
+    }
+  }
+
+  validate(lesson_id) {
+    this.showValidationError("", true);
+    if (lesson_id === undefined || lesson_id === "") {
+      this.showValidationError("Lesson id is undefined");
+      return false;
+    } else if (lesson_id.length < 6) {
+      this.showValidationError("Lesson id cannot be shorter than 6");
+      return false;
+    }
+    return true;
+  }
+
+  showValidationError(err, isLoading = false) {
+    this.model = {
+      validationError: err
+    };
+    this.isLoading = isLoading;
   }
 
   getLessonErrors(statData) {
