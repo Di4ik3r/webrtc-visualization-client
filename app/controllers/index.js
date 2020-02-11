@@ -264,14 +264,15 @@ export default class IndexController extends Controller {
       let currentTime = item.time - first.time;
       let currentBytes = item.bit - first.bit;
       
-      let bitrate = (item.currentBytes * 8) / (currentTime * 1000)
+      let bitrate = (currentBytes * 8) / (currentTime * 1000)
+      
+      // console.log(`item.bit: ${item.bit}; currentBit: ${currentBytes}`)
       
       // console.log(`bit: ${item.bit}; bitrate: ${bitrate}`)
       // console.log(`time: ${item.time}; curTime: ${currentTime}`)
       
       item.bit = bitrate;
       
-      console.log(item)
 
       first = item;
     })
