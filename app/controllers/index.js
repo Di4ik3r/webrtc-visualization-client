@@ -15,6 +15,10 @@ export default class IndexController extends Controller {
   searchStat(lesson_id) {
     this.isLoading = true;
 
+    let check = lesson_id || null
+    if(!check)
+      this.isLoading = false
+    else
     this.store
       .query("statistic", {
         filter: {
@@ -38,16 +42,15 @@ export default class IndexController extends Controller {
           errors
         };
 
-        let statsCheck = result && result.objectAt(0) && result.objectAt(0).stats
-        if(statsCheck) {
+        // let statsCheck = result && result.objectAt(0) && result.objectAt(0).stats
+        // if(statsCheck) {
           this.drawBitsChart()
           this.drawPackageLossChart()
-        } else {
-
-        }
-        
+        // } else {
+        // }
       })
       .catch(e => console.log(e));
+    console.log(this.isLoading)
   }
 
   getLessonErrors(statData) {
@@ -128,6 +131,8 @@ export default class IndexController extends Controller {
     // приведення даних
     let dataset = [];
     this.model.result.forEach(item => {
+      if(!item.stats)
+        return;
       let loss = +item.stats.video.packets_lost || null;
       let sent = +item.stats.video.packets_sent;
 
@@ -227,12 +232,14 @@ export default class IndexController extends Controller {
   drawBitsChart() {
     // приведення даних
     let dataset = [];
-    this.model.result.forEach(item =>
+    this.model.result.forEach(item => {
+      if(!item.stats)
+        return;
       dataset.push({
         bit: item.stats.video.bytes_sent,
         time: item.stats.timestamp
       })
-    );
+    });
     dataset.sort((prev, current) => prev.time - current.time);
 
     // відступи для "margin convention"
