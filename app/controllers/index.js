@@ -15,42 +15,54 @@ export default class IndexController extends Controller {
   searchStat(lesson_id) {
     this.isLoading = true;
 
-    let check = lesson_id || null
-    if(!check)
-      this.isLoading = false
-    else
-    this.store
-      .query("statistic", {
-        filter: {
-          lesson_id: lesson_id
-        }
-      })
-      .then(result => {
-        let count = 0
-        result.forEach(item => count++)
-        console.log(count)
+    if (this.validate(lesson_id)) {
+      this.store
+        .query("statistic", {
+          filter: {
+            lesson_id: lesson_id
+          }
+        })
+        .then(result => {
+          if (result.content.length !== 0) {
+            this.isLoading = false;
+            let userAgents = this.getUserAgents(result);
+            let lessonDuration = this.getLessonDuration(result);
+            let errors = this.getLessonErrors(result);
 
-        this.isLoading = false;
-        let userAgents = this.getUserAgents(result);
-        let lessonDuration = this.getLessonDuration(result);
-        let errors = this.getLessonErrors(result);
+            this.model = {
+              result,
+              userAgents,
+              lessonDuration,
+              errors
+            };
 
-        this.model = {
-          result,
-          userAgents,
-          lessonDuration,
-          errors
-        };
+            this.drawBitsChart();
+            this.drawPackageLossChart();
+          } else {
+            this.showValidationError("Lesson wasnt found");
+          }
+        })
+        .catch(e => console.log(e));
+    }
+  }
 
-        // let statsCheck = result && result.objectAt(0) && result.objectAt(0).stats
-        // if(statsCheck) {
-          this.drawBitsChart()
-          this.drawPackageLossChart()
-        // } else {
-        // }
-      })
-      .catch(e => console.log(e));
-    console.log(this.isLoading)
+  validate(lesson_id) {
+    this.showValidationError("", true);
+    if (lesson_id === undefined || lesson_id === "") {
+      this.showValidationError("Lesson id is undefined");
+      return false;
+    } else if (lesson_id.length < 6) {
+      this.showValidationError("Lesson id cannot be shorter than 6");
+      return false;
+    }
+    return true;
+  }
+
+  showValidationError(err, isLoading = false) {
+    this.model = {
+      validationError: err
+    };
+    this.isLoading = isLoading;
   }
 
   getLessonErrors(statData) {
