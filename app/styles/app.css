@@ -1,7 +1,17 @@
+ul {
+  paddin: 0;
+}
+
+.info {
+  margin-top: 2%;
+}
+
+
 .line {
   fill: none;
   /* stroke: #ffab00; */
-  stroke: #ffc312;
+  /* stroke: #ffc312; */
+  stroke: #00a8ff;
   stroke-width: 3;
 }
 .overlay {
@@ -10,7 +20,8 @@
 }
 /* Style the dots by assigning a fill and stroke */
 .dot {
-  fill: #ffc312;
+  /* fill: #ffc312; */
+  fill: #487eb0;
   stroke: #fff;
 }
 .focus circle {
@@ -120,7 +131,8 @@
 
 .navbar {
   margin-bottom: 3%;
-  background: #e04e39;
+  /* background: #e04e39; */
+  background: #192a56;
 }
 
 body {
@@ -129,7 +141,8 @@ body {
 }
 
 .header {
-  background-color: #1e719b;
+  /* background-color: #1e719b; */
+  background-color: #192a56;
   color: #fdece5;
   margin: 10px;
   border-radius: 10px;
@@ -137,27 +150,35 @@ body {
 }
 
 .card {
-  background-color: #e04e39;
-  color: #fdece5;
+  /* background-color: #e04e39; */
+  background-color: #487eb0;
+  /* color: #fdece5; */
+  color: #fff;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 5px 5px #fdece5;
 }
 
 .card-title {
-  color: #852315;
+  /* color: #852315; */
+  color: #00a8ff;
 }
 
-.card-header {
+.card-headerr {
   background-color: #292929;
-}
+
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 2% 5%;
+}  
 
 .createdAt {
   float: right;
 }
 
 .ua-text {
-  color: #852315;
+  /* color: #852315; */
+  color: #130f40;
 }
 
 .ua-info {
