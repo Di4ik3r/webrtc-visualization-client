@@ -11,19 +11,19 @@
             <div class="row info">
                 <div class="col">
                     <Header @text="User agents" />
-                    <ul>
+                    <span>
                         {{#each this.model.userAgents as |stat|}}
                         <Statistic @stat={{stat}} />
                         {{/each}}
-                    </ul>
+                    </span>
                 </div>
                 <div class="col">
                     <Header @text="Errors" />
-                    <ul>
+                    <span>
                         {{#each this.model.errors as |stat|}}
                         <Error @error={{stat}} />
                         {{/each}}
-                    </ul>
+                    </span>
                 </div>
             </div>
         </Dashboard>
