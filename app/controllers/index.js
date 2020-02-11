@@ -247,25 +247,30 @@ export default class IndexController extends Controller {
     this.model.result.forEach(item => {
       if (!item.stats) return;
 
-      let bitrate = item.stats.video.bytes_sent;
+      let bytes = item.stats.video.bytes_sent;
       let timestamp = item.stats.timestamp;
 
-      if(!first) {
-        first = {
-          bit: bitrate,
-          time: timestamp
-        }
-        return;
-      }
-
-      // console.log(`b: ${item.stats.video.bytes_sent}; t: ${item.stats.timestamp}`)
-
       dataset.push({
-        bit: item.stats.video.bytes_sent,
-        time: item.stats.timestamp
+        bit: bytes,
+        time: timestamp
       });
     });
     dataset.sort((prev, current) => prev.time - current.time);
+    
+    first = dataset.shift()
+    console.log(first)
+
+    dataset.forEach(item => {
+      let currentTime = item.time - first.time;
+      let bitrate = (item.bit * 8) / (currentTime * 1000)
+      
+      console.log(`bit: ${item.bit}; bitrate: ${bitrate}`)
+      console.log(`time: ${item.time}; curTime: ${currentTime}`)
+      
+      item.bit = bitrate;
+
+      first = item;
+    })
 
     // відступи для "margin convention"
     let margin = { top: 10, right: 5, bottom: 30, left: 90 },
