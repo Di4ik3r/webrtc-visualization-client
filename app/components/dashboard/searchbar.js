@@ -1,22 +1,3 @@
-import Component from '@glimmer/component';
-import {action} from '@ember/object';
+import Component from "@glimmer/component";
 
-export default class DashboardSearchbarComponent extends Component {
-    
-    @action
-    search(input) {
-        // let input = document.getElementById("searchbar").value
-
-        console.log(input)
-
-        // let id = +input || null
-        // if(id) {
-        //     this.sendAction()
-        // }
-    }
-
-    @action
-    key() {
-        console.log(this.lesson_id)
-    }
-}
+export default class DashboardSearchbarComponent extends Component {}

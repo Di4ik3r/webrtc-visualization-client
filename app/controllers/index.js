@@ -143,8 +143,7 @@ export default class IndexController extends Controller {
     // приведення даних
     let dataset = [];
     this.model.result.forEach(item => {
-      if(!item.stats)
-        return;
+      if (!item.stats) return;
       let loss = +item.stats.video.packets_lost || null;
       let sent = +item.stats.video.packets_sent;
 
@@ -245,12 +244,11 @@ export default class IndexController extends Controller {
     // приведення даних
     let dataset = [];
     this.model.result.forEach(item => {
-      if(!item.stats)
-        return;
+      if (!item.stats) return;
       dataset.push({
         bit: item.stats.video.bytes_sent,
         time: item.stats.timestamp
-      })
+      });
     });
     dataset.sort((prev, current) => prev.time - current.time);
 

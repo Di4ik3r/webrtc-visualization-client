@@ -6,7 +6,6 @@ ul {
   margin-top: 2%;
 }
 
-
 .line {
   fill: none;
   /* stroke: #ffab00; */
@@ -99,7 +98,7 @@ ul {
   width: 13%;
 
   cursor: pointer;
-  -webkit-user-select: none; /* Safari */        
+  -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
@@ -170,7 +169,7 @@ body {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   padding: 2% 5%;
-}  
+}
 
 .createdAt {
   float: right;
@@ -187,6 +186,10 @@ body {
 
 .container-fluid {
   width: 95%;
+}
+
+.text-center {
+  margin-top: 20px;
 }
 
 * {

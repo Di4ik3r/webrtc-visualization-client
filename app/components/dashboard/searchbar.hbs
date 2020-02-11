@@ -5,8 +5,7 @@
     {{/if}}
     <h4 style="color: red;"><i>{{@model.validationError}}</i></h4>
     <div class="panel search-panel">
-        <Input {{on "click" key}} @enter={{this.key}} @searchFunction={{@searchStat}} @value={{this.lesson_id}}
-            type="text" name="searchbar" id="searchbar" placeholder="Lesson id" />
+        <Input @value={{this.lesson_id}} type="text" name="searchbar" id="searchbar" placeholder="Lesson id" />
         <span {{on "click" (fn @searchStat lesson_id)}} class="search-button">Search</span>
     </div>
 </div>
