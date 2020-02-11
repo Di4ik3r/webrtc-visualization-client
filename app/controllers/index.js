@@ -232,7 +232,7 @@ export default class IndexController extends Controller {
       .attr("cy", function(d) {
         return yScale(d);
       })
-      .attr("r", 5);
+      .attr("r", 3);
     // .on("mouseover", function(a, b, c) {
     //   console.log(a)
     //   d3.selectAll(".dot").classed("focus", true)
@@ -267,7 +267,7 @@ export default class IndexController extends Controller {
       let bitrate = (currentBytes * 8) / (currentTime * 1000)
       
       // console.log(`item.bit: ${item.bit}; currentBit: ${currentBytes}`)
-      
+
       // console.log(`bit: ${item.bit}; bitrate: ${bitrate}`)
       // console.log(`time: ${item.time}; curTime: ${currentTime}`)
       
@@ -351,7 +351,7 @@ export default class IndexController extends Controller {
       .attr("cy", function(d) {
         return yScale(d.bit);
       })
-      .attr("r", 5);
+      .attr("r", 4);
     // .on("mouseover", function(a, b, c) {
     //   console.log(a)
     //   d3.selectAll(".dot").classed("focus", true)
