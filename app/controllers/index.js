@@ -148,7 +148,7 @@ export default class IndexController extends Controller {
       let sent = +item.stats.video.packets_sent;
 
       if (!loss) {
-        dataset.push(1);
+        dataset.push(0);
         return;
       }
 
@@ -243,8 +243,23 @@ export default class IndexController extends Controller {
   drawBitsChart() {
     // приведення даних
     let dataset = [];
+    let first;
     this.model.result.forEach(item => {
       if (!item.stats) return;
+
+      let bitrate = item.stats.video.bytes_sent;
+      let timestamp = item.stats.timestamp;
+
+      if(!first) {
+        first = {
+          bit: bitrate,
+          time: timestamp
+        }
+        return;
+      }
+
+      // console.log(`b: ${item.stats.video.bytes_sent}; t: ${item.stats.timestamp}`)
+
       dataset.push({
         bit: item.stats.video.bytes_sent,
         time: item.stats.timestamp
