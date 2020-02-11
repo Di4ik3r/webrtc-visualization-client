@@ -262,12 +262,16 @@ export default class IndexController extends Controller {
 
     dataset.forEach(item => {
       let currentTime = item.time - first.time;
-      let bitrate = (item.bit * 8) / (currentTime * 1000)
+      let currentBytes = item.bit - first.bit;
       
-      console.log(`bit: ${item.bit}; bitrate: ${bitrate}`)
-      console.log(`time: ${item.time}; curTime: ${currentTime}`)
+      let bitrate = (item.currentBytes * 8) / (currentTime * 1000)
+      
+      // console.log(`bit: ${item.bit}; bitrate: ${bitrate}`)
+      // console.log(`time: ${item.time}; curTime: ${currentTime}`)
       
       item.bit = bitrate;
+      
+      console.log(item)
 
       first = item;
     })
