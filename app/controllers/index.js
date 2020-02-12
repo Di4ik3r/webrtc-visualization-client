@@ -260,22 +260,33 @@ export default class IndexController extends Controller {
     first = dataset.shift()
     console.log(first)
 
-    dataset.forEach(item => {
+    let array = [];
+    dataset.forEach((item, i) => {
+      // console.log(item)
       let currentTime = item.time - first.time;
-      let currentBytes = item.bit - first.bit;
+      let currentBytes = Math.abs(item.bit - first.bit);
       
-      let bitrate = (currentBytes * 8) / (currentTime * 1000)
+      let bitrate = (currentBytes * 8) / (currentTime / 1000)
       
-      // console.log(`item.bit: ${item.bit}; currentBit: ${currentBytes}`)
 
       // console.log(`bit: ${item.bit}; bitrate: ${bitrate}`)
       // console.log(`time: ${item.time}; curTime: ${currentTime}`)
       
-      item.bit = bitrate;
+      item.bitrate = bitrate;
       
+      // if(bitrate < 100000000)
+        array.push(item)
+      item.bitrate = item.bitrate;
+      
+      // console.log(`item.bit: ${item.bit}; currentBit: ${currentBytes}`)
+      console.log(`${item.bit} - ${first.bit} = ${currentBytes}\t${item.time}`)
+      // console.log(i)
 
       first = item;
+
     })
+
+    dataset = array
 
     // відступи для "margin convention"
     let margin = { top: 10, right: 5, bottom: 30, left: 90 },
@@ -291,7 +302,7 @@ export default class IndexController extends Controller {
     // скейл для bit
     let yScale = d3
       .scaleLinear()
-      .domain(d3.extent(dataset, item => item.bit))
+      .domain(d3.extent(dataset, item => item.bitrate))
       .range([height, 0]);
 
     // d3 лайн генератор
@@ -301,7 +312,7 @@ export default class IndexController extends Controller {
         return xScale(d.time);
       })
       .y(function(d, i) {
-        return yScale(d.bit);
+        return yScale(d.bitrate);
       })
       .curve(d3.curveMonotoneX);
 
@@ -349,7 +360,7 @@ export default class IndexController extends Controller {
         return xScale(d.time);
       })
       .attr("cy", function(d) {
-        return yScale(d.bit);
+        return yScale(d.bitrate);
       })
       .attr("r", 4);
     // .on("mouseover", function(a, b, c) {
