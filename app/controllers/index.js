@@ -172,7 +172,7 @@ export default class IndexController extends Controller {
     let yScale = d3
       .scaleLinear()
       // .domain(d3.extent(dataset))
-      .domain([0, 1])
+      .domain([0, 0.6])
       .range([height, 0]);
 
     // d3 лайн генератор
@@ -262,6 +262,7 @@ export default class IndexController extends Controller {
 
     let array = [];
     dataset.forEach((item, i) => {
+      // console.log(`${i % 2} ... ${item.bit}\t:\t${new Date(item.time)}`)
       // console.log(item)
       let currentTime = item.time - first.time;
       let currentBytes = Math.abs(item.bit - first.bit);
@@ -275,13 +276,15 @@ export default class IndexController extends Controller {
       item.bitrate = bitrate;
       
       // if(bitrate < 100000000)
+      if(i % 2 == 0)
         array.push(item)
       item.bitrate = item.bitrate;
       
       // console.log(`item.bit: ${item.bit}; currentBit: ${currentBytes}`)
-      console.log(`${item.bit} - ${first.bit} = ${currentBytes}\t${item.time}`)
+      // console.log(`${item.bit} - ${first.bit} = ${currentBytes}\t${item.time}`)
       // console.log(i)
 
+      if(i % 2 != 0)
       first = item;
 
     })
